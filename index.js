@@ -85,7 +85,7 @@ class MiniMeter extends q.DesktopApp {
     let mode = this.config.mode || ModeDefault
     return this.getMetric(mode).then(percent => {
       logger.debug(`Got ${percent} percent`);
-      this.deleteOldSignals();
+      // this.deleteOldSignals();
 
       return new q.Signal({
         points: [this.generatePoints(percent)],
@@ -109,18 +109,18 @@ class MiniMeter extends q.DesktopApp {
   /**
    * Delete all previous signals
    */
-  async deleteOldSignals() {
-    // delete the previous signals
-    while (this.signalLog && this.signalLog.length) {
-      const signal = this.signalLog.pop().signal;
-      logger.debug(`Deleting previous signal: ${signal.id}`)
-      await q.Signal.delete(signal).catch(error => {
-        logger.error(`Error deleting signal ${signal.id}: ${error}`);
-      });
+  // async deleteOldSignals() {
+  //   // delete the previous signals
+  //   while (this.signalLog && this.signalLog.length) {
+  //     const signal = this.signalLog.pop().signal;
+  //     logger.debug(`Deleting previous signal: ${signal.id}`)
+  //     await q.Signal.delete(signal).catch(error => {
+  //       logger.error(`Error deleting signal ${signal.id}: ${error}`);
+  //     });
 
-      logger.debug(`Deleted the signal: ${signal.id}`);
-    }
-  }
+  //     logger.debug(`Deleted the signal: ${signal.id}`);
+  //   }
+  // }
 
   generatePoints(percent) {
     return [new q.Point(this.getColor(percent))];
@@ -140,10 +140,10 @@ class MiniMeter extends q.DesktopApp {
     }
   }
 
-  async shutdown() {
-    await this.deleteOldSignals();
-    await super.shutdown();
-  }
+  // async shutdown() {
+  //   await this.deleteOldSignals();
+  //   await super.shutdown();
+  // }
 }
 
 module.exports = {
